@@ -1,0 +1,11 @@
+rootProject.name = 'digital-procurement-platform'
+
+include 'shared-kernel'
+include 'services:gateway-service'
+include 'services:procurement-service'
+include 'services:product-service'
+include 'services:payment-service'
+include 'services:logistics-service'
+include 'services:certification-service'
+include 'services:notification-service'
+include 'services:analytics-service'
