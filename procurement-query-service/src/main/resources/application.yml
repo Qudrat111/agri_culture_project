@@ -1,0 +1,61 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: procurement-query-service
+  
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/agri_procurement_read
+      auto-index-creation: true
+  
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: query-projector-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.type.mapping: >
+          OrderCreatedEvent:com.agri.order.domain.event.OrderCreatedEvent,
+          OrderConfirmedEvent:com.agri.order.domain.event.OrderConfirmedEvent,
+          OrderCancelledEvent:com.agri.order.domain.event.OrderCancelledEvent,
+          OrderCompletedEvent:com.agri.order.domain.event.OrderCompletedEvent
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} [orderId=%X{orderId}] - %msg%n"
+  level:
+    root: INFO
+    com.agri.query: DEBUG
+    org.springframework.data.mongodb: DEBUG
+    org.springframework.kafka: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+
+# Rate limiting configuration
+rate-limit:
+  query:
+    capacity: 200
+    tokens: 200
+    refill-duration-minutes: 1
