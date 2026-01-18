@@ -1,6 +1,6 @@
 package com.agri.saga.infrastructure.kafka;
 
-import com.agri.saga.command.*;
+import com.agri.common.command.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;

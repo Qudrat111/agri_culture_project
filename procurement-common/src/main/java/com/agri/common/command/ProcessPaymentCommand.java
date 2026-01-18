@@ -1,4 +1,4 @@
-package com.agri.saga.command;
+package com.agri.common.command;
 
 import java.math.BigDecimal;
 
