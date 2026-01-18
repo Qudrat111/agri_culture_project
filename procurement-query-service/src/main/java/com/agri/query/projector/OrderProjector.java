@@ -33,6 +33,11 @@ import java.util.stream.Collectors;
 )
 public class OrderProjector {
 
+    // TODO: Replace with actual name resolution from User Service in production
+    // These prefixes create placeholder names until proper service integration
+    private static final String BUYER_NAME_PREFIX = "Buyer-";
+    private static final String SUPPLIER_NAME_PREFIX = "Supplier-";
+
     private final OrderViewRepository orderViewRepository;
 
     @KafkaHandler
@@ -50,9 +55,9 @@ public class OrderProjector {
             OrderView orderView = OrderView.builder()
                 .id(orderId)
                 .buyerId(event.getBuyerId())
-                .buyerName("Buyer-" + event.getBuyerId())
+                .buyerName(BUYER_NAME_PREFIX + event.getBuyerId())
                 .supplierId(event.getSupplierId())
-                .supplierName("Supplier-" + event.getSupplierId())
+                .supplierName(SUPPLIER_NAME_PREFIX + event.getSupplierId())
                 .items(mapToOrderItemViews(event.getItems()))
                 .status("PENDING")
                 .totalAmount(event.getTotalAmount())
