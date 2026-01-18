@@ -26,7 +26,6 @@ public class OutboxPublisher {
     private int batchSize;
     
     @Scheduled(fixedDelayString = "${procurement.order.outbox.publisher.fixed-delay:5000}")
-    @Transactional
     public void publishEvents() {
         List<OutboxEvent> events = outboxEventRepository.findByProcessedFalseOrderByCreatedAtAsc();
         
@@ -49,11 +48,10 @@ public class OutboxPublisher {
                             log.error("Failed to publish event {} to Kafka", event.getId(), ex);
                         } else {
                             log.debug("Event {} published to Kafka successfully", event.getId());
+                            markEventAsProcessed(event.getId());
                         }
                     });
                 
-                event.markAsProcessed();
-                outboxEventRepository.save(event);
                 published++;
                 
             } catch (Exception e) {
@@ -61,6 +59,14 @@ public class OutboxPublisher {
             }
         }
         
-        log.info("Published {} events to Kafka", published);
+        log.info("Sent {} events to Kafka", published);
+    }
+    
+    @Transactional(propagation = org.springframework.transaction.annotation.Propagation.REQUIRES_NEW)
+    public void markEventAsProcessed(String eventId) {
+        outboxEventRepository.findById(eventId).ifPresent(event -> {
+            event.markAsProcessed();
+            outboxEventRepository.save(event);
+        });
     }
 }
