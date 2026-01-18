@@ -60,3 +60,59 @@ services:
     ports:
       - "4317:4317"
       - "4318:4318"
+  
+  order-service:
+    build: ./procurement-order-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/agri_procurement
+      SPRING_DATASOURCE_USERNAME: agri
+      SPRING_DATASOURCE_PASSWORD: agri
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    ports:
+      - "8081:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+  
+  saga-orchestrator:
+    build: ./procurement-saga-orchestrator
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/agri_procurement
+      SPRING_DATASOURCE_USERNAME: agri
+      SPRING_DATASOURCE_PASSWORD: agri
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    ports:
+      - "8082:8082"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+  
+  query-service:
+    build: ./procurement-query-service
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/agri_procurement
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mongo
+      - kafka
+  
+  inventory-service:
+    build: ./procurement-inventory-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/agri_procurement
+      SPRING_DATASOURCE_USERNAME: agri
+      SPRING_DATASOURCE_PASSWORD: agri
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    ports:
+      - "8084:8084"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_started
