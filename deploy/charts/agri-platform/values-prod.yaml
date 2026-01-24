@@ -1,0 +1,29 @@
+namespace: agri
+
+image:
+  # GitHub Actions updates this field after each build.
+  registry: ghcr.io/CHANGE_ME_OWNER/CHANGE_ME_REPO
+  tag: "CHANGE_ME_TAG"
+
+services:
+  order:
+    replicas: 2
+  saga:
+    replicas: 2
+  inventory:
+    replicas: 2
+  query:
+    replicas: 2
+    serviceType: LoadBalancer
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 750m
+    memory: 1Gi
+
+prometheus:
+  scrape: true
+  path: /actuator/prometheus

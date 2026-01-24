@@ -1,0 +1,14 @@
+# Loki Stack (grafana/loki-stack)
+# We keep Grafana disabled because we install grafana/grafana separately.
+
+grafana:
+  enabled: false
+
+loki:
+  enabled: true
+  isDefault: false
+
+promtail:
+  enabled: true
+  config:
+    lokiAddress: http://loki:3100/loki/api/v1/push

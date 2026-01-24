@@ -1,0 +1,64 @@
+namespace: agri
+
+image:
+  registry: ghcr.io/your-org/your-repo
+  tag: latest
+
+services:
+  order:
+    module: procurement-order-service
+    name: order
+    port: 8081
+    replicas: 2
+    serviceType: ClusterIP
+    env:
+      DB_HOST: postgresql
+      DB_PORT: "5432"
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+  saga:
+    module: procurement-saga-orchestrator
+    name: saga
+    port: 8082
+    replicas: 2
+    serviceType: ClusterIP
+    env:
+      DB_HOST: postgresql
+      DB_PORT: "5432"
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+  inventory:
+    module: procurement-inventory-service
+    name: inventory
+    port: 8084
+    replicas: 2
+    serviceType: ClusterIP
+    env:
+      DB_HOST: postgresql
+      DB_PORT: "5432"
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+  query:
+    module: procurement-query-service
+    name: query
+    port: 8083
+    replicas: 2
+    serviceType: LoadBalancer
+    env:
+      MONGODB_URI: mongodb://mongodb:27017/agri_procurement_read
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 768Mi
+
+prometheus:
+  scrape: true
+  path: /actuator/prometheus
