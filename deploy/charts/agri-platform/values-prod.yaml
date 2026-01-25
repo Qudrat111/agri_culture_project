@@ -3,7 +3,7 @@ namespace: agri
 image:
   # GitHub Actions updates this field after each build.
   registry: ghcr.io/qudrat111/agri_culture_project
-  tag: latest
+  tag: "latest"
 
 services:
   order:
