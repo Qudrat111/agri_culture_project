@@ -15,11 +15,11 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/agri_procurement
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql.agri.svc.cluster.local:5432/agri_procurement
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
-      SPRING_FLYWAY_ENABLED: "true"
+      SPRING_FLYWAY_ENABLED: "false"
   saga:
     module: procurement-saga-orchestrator
     name: saga
@@ -32,11 +32,11 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/agri_procurement
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql.agri.svc.cluster.local:5432/agri_procurement
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
-      SPRING_FLYWAY_ENABLED: "true"
+      SPRING_FLYWAY_ENABLED: "false"
   inventory:
     module: procurement-inventory-service
     name: inventory
@@ -49,11 +49,11 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/agri_procurement
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql.agri.svc.cluster.local:5432/agri_procurement
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
-      SPRING_FLYWAY_ENABLED: "true"
+      SPRING_FLYWAY_ENABLED: "false"
   query:
     module: procurement-query-service
     name: query
@@ -63,11 +63,11 @@ services:
     env:
       MONGODB_URI: mongodb://mongodb:27017/agri_procurement_read
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/agri_procurement
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql.agri.svc.cluster.local:5432/agri_procurement
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
-      SPRING_FLYWAY_ENABLED: "true"
+      SPRING_FLYWAY_ENABLED: "false"
 resources:
   requests:
     cpu: 100m

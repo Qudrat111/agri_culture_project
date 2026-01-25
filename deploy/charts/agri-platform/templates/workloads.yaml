@@ -28,6 +28,8 @@ spec:
             - name: http
               containerPort: {{ $svc.port }}
           env:
+            - name: SPRING_FLYWAY_ENABLED
+              value: "false"
             - name: SPRING_PROFILES_ACTIVE
               value: "k8s"
             {{- range $envName, $envVal := $svc.env }}
