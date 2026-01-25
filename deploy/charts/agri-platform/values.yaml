@@ -1,9 +1,7 @@
 namespace: agri
-
 image:
   registry: ghcr.io/qudrat111/agri_culture_project
-  tag: "latest"
-
+  tag: "230bce32830d0a74ec364240789253f1e9cc282e"
 services:
   order:
     module: procurement-order-service
@@ -70,7 +68,6 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
       SPRING_FLYWAY_ENABLED: "true"
-
 resources:
   requests:
     cpu: 100m
@@ -78,7 +75,6 @@ resources:
   limits:
     cpu: 500m
     memory: 768Mi
-
 prometheus:
   scrape: true
   path: /actuator/prometheus
