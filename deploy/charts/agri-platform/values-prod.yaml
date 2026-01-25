@@ -5,13 +5,13 @@ image:
   tag: "6ea66bafdcb2fb065b38437859d837d6557545e8"
 services:
   order:
-    replicas: 2
+    replicas: 1
   saga:
-    replicas: 2
+    replicas: 1
   inventory:
-    replicas: 2
+    replicas: 1
   query:
-    replicas: 2
+    replicas: 1
     serviceType: LoadBalancer
 resources:
   requests:

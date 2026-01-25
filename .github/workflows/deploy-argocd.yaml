@@ -70,14 +70,14 @@ jobs:
 
       - name: Update Helm production values
         run: |
-          yq -i '.image.registry = "ghcr.io/${{ env.IMAGE_REPO }}"' deploy/charts/agri-platform/values.yaml
-          yq -i '.image.tag = "${{ github.sha }}"' deploy/charts/agri-platform/values.yaml
+          yq -i '.image.registry = "ghcr.io/${{ env.IMAGE_REPO }}"' deploy/charts/agri-platform/values-prod.yaml
+          yq -i '.image.tag = "${{ github.sha }}"' deploy/charts/agri-platform/values-prod.yaml
 
       - name: Commit and push
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
-          git add deploy/charts/agri-platform/values.yaml
+          git add deploy/charts/agri-platform/values-prod.yaml
           git commit -m "chore(gitops): deploy ${GITHUB_SHA}" || echo "No changes to commit"
           git push
 
