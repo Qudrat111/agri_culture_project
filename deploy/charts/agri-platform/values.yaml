@@ -1,7 +1,7 @@
 namespace: agri
 image:
   registry: ghcr.io/qudrat111/agri_culture_project
-  tag: "230bce32830d0a74ec364240789253f1e9cc282e"
+  tag: "13e2a7de0aa58e8bc5f4b577af9f734b5f91b8de"
 services:
   order:
     module: procurement-order-service
