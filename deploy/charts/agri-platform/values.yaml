@@ -9,7 +9,7 @@ services:
     module: procurement-order-service
     name: order
     port: 8081
-    replicas: 2
+    replicas: 1
     serviceType: ClusterIP
     env:
       DB_HOST: postgresql
@@ -26,7 +26,7 @@ services:
     module: procurement-saga-orchestrator
     name: saga
     port: 8082
-    replicas: 2
+    replicas: 1
     serviceType: ClusterIP
     env:
       DB_HOST: postgresql
@@ -43,7 +43,7 @@ services:
     module: procurement-inventory-service
     name: inventory
     port: 8084
-    replicas: 2
+    replicas: 1
     serviceType: ClusterIP
     env:
       DB_HOST: postgresql
@@ -60,7 +60,7 @@ services:
     module: procurement-query-service
     name: query
     port: 8083
-    replicas: 2
+    replicas: 1
     serviceType: LoadBalancer
     env:
       MONGODB_URI: mongodb://mongodb:27017/agri_procurement_read
